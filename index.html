@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บัญชีพร้อม | บริการรับทำบัญชี</title>
+  <style>
+    :root {
+      --ink: #18212f;
+      --muted: #657084;
+      --line: #dde4ee;
+      --paper: #ffffff;
+      --soft: #f5f8fb;
+      --brand: #0d7c75;
+      --brand-dark: #075f59;
+      --gold: #c78b2d;
+      --blue: #2f6fbd;
+      --shadow: 0 16px 42px rgba(24, 33, 47, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--soft);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      width: min(1120px, calc(100% - 32px));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--brand);
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .nav-links a:hover {
+      color: var(--brand);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 56px 0 72px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.86) 47%, rgba(255, 255, 255, 0.16) 100%),
+        url("https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1800&q=80") center right / cover;
+    }
+
+    .hero-content {
+      max-width: 620px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 12px;
+      border: 1px solid rgba(13, 124, 117, 0.28);
+      border-radius: 999px;
+      color: var(--brand-dark);
+      background: rgba(13, 124, 117, 0.08);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 19px;
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 18px;
+      border: 1px solid var(--brand);
+      border-radius: 8px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .button-primary {
+      color: white;
+      background: var(--brand);
+      box-shadow: 0 10px 20px rgba(13, 124, 117, 0.24);
+    }
+
+    .button-secondary {
+      color: var(--brand-dark);
+      background: white;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 8px 22px rgba(24, 33, 47, 0.06);
+    }
+
+    .card-media {
+      height: 170px;
+      margin: -24px -24px 20px;
+      border-radius: 8px 8px 0 0;
+      object-fit: cover;
+      width: calc(100% + 48px);
+      display: block;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      color: white;
+      background: var(--brand);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .feature-band {
+      background: white;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .check {
+      flex: 0 0 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: white;
+      background: var(--gold);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .pricing {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 16px 0;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--brand-dark);
+    }
+
+    .price small {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .popular {
+      border-color: rgba(13, 124, 117, 0.45);
+      box-shadow: 0 14px 34px rgba(13, 124, 117, 0.16);
+    }
+
+    .tag {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: white;
+      background: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .contact {
+      background: var(--ink);
+      color: white;
+    }
+
+    .contact .section-title p,
+    .contact .card p {
+      color: #b8c3d3;
+    }
+
+    .contact .card {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: none;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      color: white;
+      background: rgba(255, 255, 255, 0.08);
+      font: inherit;
+    }
+
+    select option {
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #bac5d4;
+    }
+
+    .notice {
+      display: none;
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      color: #083b37;
+      background: #c7f2e8;
+      font-weight: 700;
+    }
+
+    .notice.is-visible {
+      display: block;
+    }
+
+    footer {
+      padding: 24px 0;
+      color: var(--muted);
+      background: #111824;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 14px 0;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 56px 0;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 100%),
+          url("https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1300&q=80") center / cover;
+      }
+
+      .card-grid,
+      .pricing,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container,
+      .nav {
+        width: min(100% - 24px, 1120px);
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .section-title h2 {
+        font-size: 28px;
+      }
+
+      .hero-actions,
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="หลัก">
+      <a class="logo" href="#">
+        <span class="logo-mark">บ</span>
+        <span>บัญชีพร้อม</span>
+      </a>
+      <div class="nav-links">
+        <a href="#services">บริการ</a>
+        <a href="#process">ขั้นตอน</a>
+        <a href="#pricing">แพ็กเกจ</a>
+        <a href="#contact">ติดต่อ</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow">รับทำบัญชีสำหรับ SME และร้านค้าออนไลน์</span>
+          <h1>จัดการบัญชีให้เรียบร้อย เข้าใจง่าย และทันเวลา</h1>
+          <p class="lead">บริการทำบัญชีรายเดือน ยื่นภาษี ปิดงบ และให้คำปรึกษาเบื้องต้น เหมาะกับเจ้าของธุรกิจที่ต้องการทีมช่วยดูแลเอกสารอย่างเป็นระบบ</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#contact">ขอใบเสนอราคา</a>
+            <a class="button button-secondary" href="#services">ดูบริการ</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-title">
+          <h2>บริการหลัก</h2>
+          <p>เลือกบริการที่เหมาะกับขนาดธุรกิจและรอบเอกสารของคุณ</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <img class="card-media" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80" alt="เอกสารบัญชีและเครื่องคิดเลข">
+            <h3>ทำบัญชีรายเดือน</h3>
+            <p>บันทึกรายรับรายจ่าย ตรวจเอกสารซื้อขาย และสรุปรายงานที่เจ้าของกิจการอ่านต่อได้ทันที</p>
+          </article>
+          <article class="card">
+            <img class="card-media" src="static/assets/tax-filing.svg" alt="เอกสารภาษี เครื่องคิดเลข และแล็ปท็อปสำหรับงานบัญชี">
+            <h3>ยื่นภาษีและประกันสังคม</h3>
+            <p>ช่วยเตรียมแบบ ภงด. ภพ. และเอกสารที่เกี่ยวข้อง เพื่อลดงานซ้ำและลดความเสี่ยงจากการตกหล่น</p>
+          </article>
+          <article class="card">
+            <img class="card-media" src="https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=900&q=80" alt="กราฟและรายงานธุรกิจบนโต๊ะทำงาน">
+            <h3>ปิดงบและให้คำปรึกษา</h3>
+            <p>รวบรวมข้อมูลปลายปี ประสานผู้สอบบัญชี และแนะนำภาพรวมตัวเลขเพื่อวางแผนธุรกิจขั้นต่อไป</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-band" id="process">
+      <div class="container split">
+        <img class="photo" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1100&q=80" alt="การประชุมปรึกษางานบัญชี">
+        <div>
+          <div class="section-title">
+            <h2>ทำงานเป็นขั้นตอน ตรวจสอบได้</h2>
+            <p>ทุกงานเริ่มจากการดูประเภทธุรกิจ ปริมาณเอกสาร และรอบยื่นภาษี เพื่อวางระบบที่เหมาะกับงานจริง</p>
+          </div>
+          <div class="check-list">
+            <div class="check-item">
+              <span class="check">1</span>
+              <div><strong>รับข้อมูลธุรกิจ</strong><br>สำรวจประเภทรายได้ ค่าใช้จ่าย และเอกสารที่มีอยู่</div>
+            </div>
+            <div class="check-item">
+              <span class="check">2</span>
+              <div><strong>จัดเอกสารและบันทึกบัญชี</strong><br>แยกหมวดหมู่ ตรวจรายการผิดปกติ และสรุปคำถามที่ต้องยืนยัน</div>
+            </div>
+            <div class="check-item">
+              <span class="check">3</span>
+              <div><strong>ส่งรายงานและแจ้งกำหนดการ</strong><br>สรุปผลรายเดือน พร้อมรายการที่ต้องดำเนินการก่อนวันครบกำหนด</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-title">
+          <h2>แพ็กเกจเริ่มต้น</h2>
+          <p>ราคาตัวอย่างสามารถปรับตามจำนวนเอกสารและความซับซ้อนของธุรกิจ</p>
+        </div>
+        <div class="card-grid pricing">
+          <article class="card">
+            <div class="icon">S</div>
+            <h3>เริ่มต้น</h3>
+            <p>สำหรับร้านค้าเล็กหรือฟรีแลนซ์ที่เอกสารไม่มาก</p>
+            <div class="price">2,500 <small>บาท/เดือน</small></div>
+            <p>บันทึกบัญชีพื้นฐานและสรุปรายงานรายเดือน</p>
+          </article>
+          <article class="card popular">
+            <span class="tag">ยอดนิยม</span>
+            <h3>SME รายเดือน</h3>
+            <p>สำหรับบริษัทที่มีรายการซื้อขายต่อเนื่องทุกเดือน</p>
+            <div class="price">4,900 <small>บาท/เดือน</small></div>
+            <p>ทำบัญชี ยื่นภาษี และติดตามเอกสารครบตามรอบงาน</p>
+          </article>
+          <article class="card">
+            <div class="icon">P</div>
+            <h3>ปิดงบ</h3>
+            <p>สำหรับกิจการที่ต้องการจัดเอกสารและปิดงบปลายปี</p>
+            <div class="price">15,000 <small>บาทขึ้นไป</small></div>
+            <p>ตรวจข้อมูลทั้งปี เตรียมงบ และประสานงานที่เกี่ยวข้อง</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container split">
+        <div>
+          <div class="section-title">
+            <h2>เริ่มคุยเรื่องบัญชีของคุณ</h2>
+            <p>ฝากข้อมูลเบื้องต้นไว้ แล้วทีมงานจะติดต่อกลับพร้อมคำแนะนำแพ็กเกจที่เหมาะสม</p>
+          </div>
+          <div class="card">
+            <h3>ช่องทางติดต่อ</h3>
+            <p>โทร 02-123-4567<br>อีเมล hello@buncheeprom.example<br>เปิดทำการ จันทร์-ศุกร์ 09:00-18:00</p>
+          </div>
+        </div>
+        <div class="card">
+          <p class="notice" id="formNotice">ระบบจะเปิดอีเมลพร้อมรายละเอียดที่กรอกไว้ กรุณากดส่งในโปรแกรมอีเมลของคุณ</p>
+          <form id="contactForm">
+            <input name="name" placeholder="ชื่อผู้ติดต่อ" required>
+            <input name="phone" placeholder="เบอร์โทร" required>
+            <select name="service" aria-label="บริการที่สนใจ">
+              <option>ทำบัญชีรายเดือน</option>
+              <option>ยื่นภาษี</option>
+              <option>ปิดงบประจำปี</option>
+              <option>ปรึกษาเริ่มต้นธุรกิจ</option>
+            </select>
+            <textarea name="message" placeholder="รายละเอียดธุรกิจหรือจำนวนเอกสารต่อเดือน"></textarea>
+            <button class="button button-primary" type="submit">ส่งข้อมูล</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2026 บัญชีพร้อม | เว็บไซต์พร้อมอัปโหลด Cloudflare Pages</div>
+  </footer>
+
+  <script>
+    const contactForm = document.querySelector("#contactForm");
+    const formNotice = document.querySelector("#formNotice");
+
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(contactForm);
+      const body = [
+        `ชื่อผู้ติดต่อ: ${data.get("name")}`,
+        `เบอร์โทร: ${data.get("phone")}`,
+        `บริการที่สนใจ: ${data.get("service")}`,
+        "",
+        "รายละเอียด:",
+        data.get("message") || "-"
+      ].join("\n");
+
+      formNotice.classList.add("is-visible");
+      window.location.href = `mailto:hello@buncheeprom.example?subject=${encodeURIComponent("ขอใบเสนอราคาบริการบัญชี")}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</body>
+</html>
